@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Books.Models.Book>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-dark">Books</h2>
+ 
+<hr />
+
+<a href="@Url.Action("Create")" class=" btn btn-dark">
+    <i class="icofont-plus"></i>
+    Add New
+</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Description</th>
+            <th>Added On</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model)
+        {
+        <tr>
+            <td>@book.Title</td>
+            <td>@book.Author</td>
+            <td>@book.Description</td>
+            <td>@book.AddedOn</td>
+            <td>@book.Title</td>
+            <td>
+                <a href="@Url.Action("Edit", "Books", new { id = book.Id })" class="btn btn-dark">
+                    <i class="icofont-ui-edit"></i>
+                    Edit
+                </a>
+                <a href="javascript:;" class="btn btn-danger">
+                    <i class="icofont-ui-close"><i/>
+                    
+                </a>
+            </td>
+
+        </tr>
+  
+        }
+    </tbody>
+</table>
