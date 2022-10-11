@@ -5,46 +5,73 @@
 }
 
 <h2 class="text-dark">Books</h2>
- 
+
 <hr />
 
 <a href="@Url.Action("Create")" class=" btn btn-dark">
     <i class="icofont-plus"></i>
     Add New
 </a>
+<span id="Message" class="d-non">@TempData["Message"] </span>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Description</th>
-            <th>Added On</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var book in Model)
-        {
-        <tr>
-            <td>@book.Title</td>
-            <td>@book.Author</td>
-            <td>@book.Description</td>
-            <td>@book.AddedOn</td>
-            <td>@book.Title</td>
-            <td>
-                <a href="@Url.Action("Edit", "Books", new { id = book.Id })" class="btn btn-dark">
-                    <i class="icofont-ui-edit"></i>
-                    Edit
-                </a>
-                <a href="javascript:;" class="btn btn-danger">
-                    <i class="icofont-ui-close"><i/>
-                    
-                </a>
-            </td>
+@if (!Model.Any())
+{
+<div class="mt-3 alert alert-warning">
+    Er zijn geen boeken toegevoegd
 
-        </tr>
-  
-        }
-    </tbody>
-</table>
+</div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Added On</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(book.Title, "Details", "Books", new { id = book.Id }, null)</td>
+                    <td>@book.Author</td>
+                    <td>@book.Category.Name</td>
+                    <td>@book.Description</td>
+                    <td>@book.AddedOn</td>
+                    <td>@book.Title</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Books", new { id = book.Id })" class="btn btn-dark">
+                            <i class="icofont-ui-edit"></i>
+                            Edit
+                        </a>
+                        <a href="javascript:;" class="btn btn-danger">
+                            <i class="icofont-delete"></i>
+                            Delete
+                        </a>
+                    </td>
+
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+}
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            var message = $('#Message').text();
+            if (message !== '') {
+                toastr.success(message);
+            }
+        });
+    </script>
+}
+
